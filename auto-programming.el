@@ -44,7 +44,7 @@
   (expand-file-name (concat (find-lisp-object-file-name 'auto-programming 'defun) "/../")))
 
 (defun auto-programming:candidates (script word)
-  (split-string-and-unquote (shell-command-to-string (format "michizane %s %s" script (shell-quote-argument word))) "\n")
+  (split-string-and-unquote (shell-command-to-string (format "perl %s %s" (concat (auto-programming:root) script) (shell-quote-argument word))) "\n")
   )
 
 (defun auto-programming:select (candidates)
@@ -58,7 +58,7 @@
   (interactive)
   (let* (
          (word (replace-regexp-in-string "^\\s-+\\|\n+" "" (thing-at-point 'line)))
-         (candidates (auto-programming:candidates "horizontal" word))
+         (candidates (auto-programming:candidates "horizontal.pl" word))
          )
     (if candidates
         (let (
@@ -79,7 +79,7 @@
   (interactive)
   (let* (
          (word (replace-regexp-in-string "^\\s-+\\|\n+" "" (thing-at-point 'line)))
-         (candidates (auto-programming:candidates "vertical" word))
+         (candidates (auto-programming:candidates "vertical.pl" word))
          )
     (if candidates
         (let (
